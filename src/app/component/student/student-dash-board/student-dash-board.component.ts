@@ -58,12 +58,10 @@ export class StudentDashBoardComponent implements OnInit{
           this.teacherList = data
           this.numberOfTeachers = this.teacherList.length
           this.ngxLoader.stop()
-          this.open()
-          
+          this.open()   
         })
       }
       else{ 
-       
         this.getTeacherDetails();
         this.ngxLoader.stop()
       }
@@ -92,9 +90,9 @@ export class StudentDashBoardComponent implements OnInit{
     this.modalRef.onClose.subscribe((teacher:Teacher)=>{
       //update the Teacher and student both 
       this.ngxLoader.start()
+      this.populateTacherDetailst(teacher)
       if(this.studentData)
         this.studentService.updateStudentDetails(teacher.uid,this.studentData).then(()=>{
-          this.getTeacherDetails()
           this.ngxLoader.stop()
         },err=>{
           this.ngxLoader.stop()
@@ -118,13 +116,16 @@ export class StudentDashBoardComponent implements OnInit{
   getTeacherDetails(){
     if(this.studentData){
     this.userService.getCurrentTeacherDetails("Teacher",this.studentData.proctorID).subscribe((selectedTeacher:Teacher)=>{
-      //const selectedTeacher = this.teacherList?.find(teacher => teacher.uid === this.studentData?.proctorID);
-      this.teacherName = selectedTeacher? selectedTeacher.first_name + selectedTeacher.last_name : undefined;
+      this.populateTacherDetailst(selectedTeacher)
+    });}
+  }
+
+  populateTacherDetailst(selectedTeacher:Teacher){
+    this.teacherName = selectedTeacher? selectedTeacher.first_name + selectedTeacher.last_name : undefined;
       this.teacherAge = selectedTeacher?selectedTeacher.age : undefined
       this.teacherEmail = selectedTeacher?selectedTeacher.email : undefined
       this.teacherNumber = selectedTeacher?selectedTeacher.phone_number : undefined
       this.teacherGender = selectedTeacher?selectedTeacher.gender : undefined
       this.teacherDepartment = selectedTeacher?selectedTeacher.department : undefined
-    });}
   }
 }
