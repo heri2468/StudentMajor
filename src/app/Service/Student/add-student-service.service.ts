@@ -11,14 +11,23 @@ import { collection,
 import { Student } from 'src/app/modal/student';
 import { AuthService } from 'src/app/shared/auth.service';
 import  firebase from 'firebase/compat/app';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
+import { EmailModel } from 'src/app/modal/emailModel';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AddStudentServiceService {
 
-  constructor(private fireStore:Firestore,private fireauth:AngularFireAuth) { }
+  private emailEndPoint = "http://localhost:3000/SendMail";
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+    })
+  };
+
+  constructor(private fireStore:Firestore,private fireauth:AngularFireAuth,private http: HttpClient) { }
 
   RegisterStudent(studentData:Student){
     return this.fireauth.createUserWithEmailAndPassword(studentData.email,"123456789")
@@ -40,20 +49,15 @@ export class AddStudentServiceService {
     
     return this.fireauth.signInWithEmailAndPassword(userName,password)
   }
-  async SendMail(){
-    // const client = new SMTPClient({
-    //   user: 'admin.SIT@gmail.com',
-    //   password: '123456789',
-    //   host: 'smtp.your-email.com',
-    //   ssl: true,
-    // });
-    // const message = await client.sendAsync({
-    //   text: 'i hope this works',
-    //   from: 'sanjayas430@gmail.com',
-    //   to: '1by18ec144@bmsit.in',
-    //   subject: 'testing emailjs',
-    // });
-    // console.log(message)
+  SendMail(studentData:Student){
+    let emailToSend:EmailModel = {
+      fromAddress:"",
+      toAddresses:[studentData.email],
+      subject:"Login Credentials",
+      emailBody:`<b>Wellcome to SIT your login crediantials to the our portal is \n UserName : ${studentData.email}\nPassword : 123465789<b>`,
+      attechments:"",
+    }
+    console.log(emailToSend)
+    return this.http.post(this.emailEndPoint,emailToSend,this.httpOptions)
   }
-  
 }

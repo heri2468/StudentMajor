@@ -39,6 +39,7 @@ import { EventViewerComponent } from './component/common/event-viewer/event-view
 import { DateToStringPipe } from './pipes/date-to-string';
 import { EventStatusPipe } from './pipes/event-status';
 import { AddEventComponent } from './component/teacher/add-event/add-event.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const ngxLodaerConfiguration: NgxUiLoaderConfig = {
   "bgsColor": "#9ebfff",
@@ -113,7 +114,8 @@ const ngxLodaerConfiguration: NgxUiLoaderConfig = {
     InfiniteScrollModule,
     NgxEmojiPickerModule.forRoot(),
     MatDatepickerModule, 
-    MatNativeDateModule
+    MatNativeDateModule,
+    HttpClientModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

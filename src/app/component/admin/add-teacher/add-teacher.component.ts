@@ -96,19 +96,23 @@ export class AddTeacherComponent {
         this.teacherObj.uid = user.user.uid;
         this.addTeacherService.AddTeacherDetails(this.teacherObj).then(()=>{
           this.addTeacherService.logOutSecondaryAndLogInPrimary()?.then(async (user)=>{
-            this.OnShowAddedStudentSuccess();
-            console.log("called OnResetedForm")
-            await this.OnResetedForm();
-            console.log("completed OnResetedForm")
-            if(user.user?.uid != undefined){
-              console.log("89088888888888888888888888888888888888888888888888888888888888888888888888")
-              this.firebaseAuth.currentUser.then((user)=>{
-                console.log(user?.email)
-                this.ngxLoader.stop()
-              },err=>{
-                this.ngxLoader.stop()
-              })
-            }
+            this.addTeacherService.SendMail(this.teacherObj).subscribe((resp)=>{
+              this.OnShowAddedStudentSuccess();
+              console.log("called OnResetedForm")
+              this.OnResetedForm();
+              console.log("completed OnResetedForm")
+              if(user.user?.uid != undefined){
+                console.log("89088888888888888888888888888888888888888888888888888888888888888888888888")
+                this.firebaseAuth.currentUser.then((user)=>{
+                  console.log(user?.email)
+                  this.ngxLoader.stop()
+                },err=>{
+                  this.ngxLoader.stop()
+                })
+              }
+            },err=>{
+              this.ngxLoader.stop()
+            })
           })
         });
       }
@@ -118,6 +122,4 @@ export class AddTeacherComponent {
       this.OnShowAddedStudentWarning();
     })
   }
-
-  
 }

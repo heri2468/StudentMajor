@@ -97,12 +97,18 @@ export class AddStudentComponent implements OnInit{
         this.studentObj.uid = user.user.uid;
         this.addStudentService.AddStudentDetails(this.studentObj).then(()=>{
           this.addStudentService.logOutSecondaryAndLogInPrimary()?.then((user)=>{
-            this.OnShowAddedStudentSuccess();
-            this.OnResetedForm();
-            if(user.user?.uid != undefined){
-              console.log("89088888888888888888888888888888888888888888888888888888888888888888888888")
-            }
-            this.ngxLoader.stop()
+            this.addStudentService.SendMail(this.studentObj).subscribe((resp)=>{
+              console.log(resp)
+              this.OnShowAddedStudentSuccess();
+              this.OnResetedForm();
+              if(user.user?.uid != undefined){
+                console.log("89088888888888888888888888888888888888888888888888888888888888888888888888")
+              }
+              this.ngxLoader.stop()
+            },err=>{
+              console.log("failed to send the mail")
+              this.ngxLoader.stop()
+            })
           },err=>{
             console.log(err)
             this.ngxLoader.stop()
