@@ -67,6 +67,12 @@ export class AnnouncementService {
     return collectionData(queryAll) as Observable<Announcement[]>
   }
 
+  getTopThreeEvents():Observable<Announcement[]>{
+    const ref = collection(this.firestore, 'Announcements');
+    const queryAll = query(ref,orderBy('EventDate','desc'))
+    return collectionData(queryAll) as Observable<Announcement[]>
+  }
+
   async sendEmail(eventDetails:Announcement){
     let emailToSend:EmailModel = {
       fromAddress:"",
