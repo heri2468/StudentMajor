@@ -11,6 +11,8 @@ import { StudentChatComponent } from './component/student/chat/chat.component';
 import { AddAnnouncementComponent } from './component/admin/add-announcement/add-announcement.component';
 import { EventViewerComponent } from './component/common/event-viewer/event-viewer.component';
 import { AddEventComponent } from './component/teacher/add-event/add-event.component';
+import { AddresultsComponent } from './component/teacher/addresults/addresults.component';
+import { ViewResultComponent } from './component/student/view-result/view-result.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'dashboard',pathMatch:'full'},
@@ -24,7 +26,9 @@ const routes: Routes = [
   {path:'studentChat',component:StudentChatComponent},
   {path:'addAnnouncement',component:AddAnnouncementComponent},
   {path:'viewEvents',component:EventViewerComponent},
-  {path:'addEvent',component:AddEventComponent}
+  {path:'addEvent',component:AddEventComponent},
+  {path:'addResults',component: AddresultsComponent},
+  {path:'viewResults',component: ViewResultComponent},
 
 ];
 

@@ -40,6 +40,8 @@ import { DateToStringPipe } from './pipes/date-to-string';
 import { EventStatusPipe } from './pipes/event-status';
 import { AddEventComponent } from './component/teacher/add-event/add-event.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AddresultsComponent } from './component/teacher/addresults/addresults.component';
+import { ViewResultComponent } from './component/student/view-result/view-result.component';
 
 const ngxLodaerConfiguration: NgxUiLoaderConfig = {
   "bgsColor": "#9ebfff",
@@ -93,7 +95,9 @@ const ngxLodaerConfiguration: NgxUiLoaderConfig = {
     AddAnnouncementComponent,
     EventViewerComponent,
     EventStatusPipe,
-    AddEventComponent
+    AddEventComponent,
+    AddresultsComponent,
+    ViewResultComponent
   ],
   imports: [
     BrowserModule,

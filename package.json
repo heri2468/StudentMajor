@@ -24,6 +24,7 @@
     "angular-bootstrap-md": "^15.0.0",
     "angular-resizable-element": "^7.0.2",
     "assert": "^2.0.0",
+    "axios": "^1.4.0",
     "body-scroll-lock": "^4.0.0-beta.0",
     "bootstrap-icons": "^1.10.4",
     "crypto-browserify": "^3.12.0",

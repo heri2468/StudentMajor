@@ -216,15 +216,15 @@
                 </div>
                 
               </div>
-              <div class="table-responsive" style="height: max-content;">
+              <div class="table-responsive text-nowrap" style="height: max-content;">
                 <table class="table datatable-table align-middle mb-0 bg-white table-borderless" mdbTable style="height: 200px;">
                   <thead class="bg-light">
                     <tr>
-                      <th *ngFor="let header of headers">{{header}}</th>
+                      <th *ngFor="let header of headers" >{{header}}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let student of studentList">
+                    <tr *ngFor="let student of studentList" (click)="onAddresults(student)">
                       <td>
                         <div class="d-flex align-items-center">
                           <img
@@ -248,6 +248,9 @@
                       <td>{{student.phone_number}}</td>
                       <td>
                         <p class="fw-normal mb-1">{{student.gender}}</p>
+                      </td>
+                      <td style="width: 150px;">
+                          <button type="button" class="btn btn-primary" style="align-items: end;">Add Results</button>
                       </td>
                     </tr>
                   </tbody>

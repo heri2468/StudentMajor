@@ -13,6 +13,8 @@ import { AddStudentServiceService } from 'src/app/Service/Student/add-student-se
 import { Router } from '@angular/router';
 import { AnnouncementService } from 'src/app/Service/common/announcement.service';
 import { Announcement } from 'src/app/modal/announcement';
+import { Results } from 'src/app/modal/results';
+import { AddResultService } from 'src/app/Service/Teacher/add-result.service';
 
 @Component({
   selector: 'app-student-dash-board',
@@ -31,12 +33,14 @@ export class StudentDashBoardComponent implements OnInit{
   numberOfStudents:number = 0;
   numberOfTeachers:number = 0;
   eventList:Announcement[]|undefined
+  resultList:Results[]|undefined
   teacherName:string|undefined
   teacherAge:string|undefined
   teacherEmail:string|undefined
   teacherNumber:string|undefined
   teacherGender:string|undefined
   teacherDepartment:string|undefined
+  currentUserId:string|undefined|null = ""
   constructor(
     private studentDataService:ReadDataService,
     private ngxLoader:NgxUiLoaderService,
@@ -46,12 +50,15 @@ export class StudentDashBoardComponent implements OnInit{
     private userService:UsersService,
     private studentService:AddStudentServiceService,
     private router:Router,
-    private eventService:AnnouncementService){}
+    private eventService:AnnouncementService,
+    private resultService:AddResultService){}
   
   ngOnInit(): void {
+    this.currentUserId = localStorage.getItem("UserId")
     this.ngxLoader.start()
     this.userService.getCurrentUserdetails(this.common.roleData,this.common.userId).subscribe((user:Student)=>{
       this.studentData = user;
+      console.log(this.studentData)
       if(this.studentData.proctorID == undefined || this.studentData.proctorID == ''){
         console.log("I am A aproctor less student")
         this.studentDataService.getAllTeacherOfCurentBranch(this.studentData.department).subscribe((data)=>{
@@ -73,7 +80,14 @@ export class StudentDashBoardComponent implements OnInit{
         this.eventList = events
       }
     })
-    
+    this.resultService.getResults(this.currentUserId??"").subscribe((results)=>{
+      console.log(results)
+      if(results.length > 3){
+        this.resultList = results.slice(0,3)
+      }else{
+        this.resultList = results
+      }
+    })
   }
   
   OnUserLogout(){
@@ -111,6 +125,10 @@ export class StudentDashBoardComponent implements OnInit{
     console.log("I am adding new Announcement")
     this.router.navigate(["viewEvents"],{state:{from:"Student"}})
     console.log("I am adding new Announcement done")
+  }
+
+  onResultViewClick(){
+    this.router.navigate(["viewResults"])
   }
   
   getTeacherDetails(){

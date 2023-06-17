@@ -24,7 +24,7 @@ export class TeacherDashboardComponent implements OnInit{
   defaultImage = "https://mdbootstrap.com/img/new/avatars/8.jpg"
   modalRef: MdbModalRef<SelectProctorModalComponent> | null = null;
   
-  headers = ['Name', 'Age', 'Department', 'Phone', 'gender',];
+  headers = ['Name', 'Age', 'Department', 'Phone', 'gender'," "];
   teacherList:Teacher[] | undefined;
   studentList:Student[] | undefined;
   selectedRow:Teacher | undefined
@@ -71,6 +71,10 @@ export class TeacherDashboardComponent implements OnInit{
     console.log("I am adding new Announcement")
     this.router.navigate(["viewEvents"],{state:{from:"Teacher"}})
     console.log("I am adding new Announcement done")
+  }
+
+  onAddresults(student:Student){
+    this.router.navigate(["addResults"],{state:{studentDetails:student}})
   }
   
 }
